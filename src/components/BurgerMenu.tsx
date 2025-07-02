@@ -48,7 +48,7 @@ const BurgerMenu = () => {
           <Menu className="h-4 w-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-[280px] sm:w-[320px]">
+      <SheetContent side="left" className="w-[250px] sm:w-[290px]">
         <SheetHeader>
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
