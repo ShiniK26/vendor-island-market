@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { User, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
+import BurgerMenu from "@/components/BurgerMenu";
 
 const ProductManagement = () => {
   const products = [
@@ -38,9 +39,12 @@ const ProductManagement = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
-          <Link to="/dashboard" className="text-xl font-bold text-primary">
-            Products
-          </Link>
+          <div className="flex items-center gap-3">
+            <BurgerMenu />
+            <Link to="/dashboard" className="text-xl font-bold text-primary">
+              Products
+            </Link>
+          </div>
           <Button variant="outline" size="sm">
             <User className="h-4 w-4" />
           </Button>

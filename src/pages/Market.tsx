@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, User, Menu } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
+import BurgerMenu from "@/components/BurgerMenu";
 
 const Market = () => {
   const vendors = [
@@ -39,9 +40,7 @@ const Market = () => {
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm">
-              <Menu className="h-4 w-4" />
-            </Button>
+            <BurgerMenu />
             <Link to="/" className="text-xl font-bold text-primary">
               VendorIsland
             </Link>
