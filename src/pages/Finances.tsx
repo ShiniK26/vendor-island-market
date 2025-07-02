@@ -37,14 +37,14 @@ const Finances = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto">
-          <Link to="/" className="text-xl font-bold text-primary mb-2 block">
+          <Link to="/" className="text-xl font-bold text-primary">
             VendorIsland
           </Link>
-          <h1 className="text-lg font-medium">Finances</h1>
         </div>
       </header>
 
       <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
+        <h1 className="text-xl font-bold text-primary">Finances</h1>
         {/* Balance Card */}
         <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
           <CardContent className="p-6">

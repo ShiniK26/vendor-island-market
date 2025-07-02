@@ -44,18 +44,20 @@ const ProductFinder = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto">
-          <Link to="/" className="text-xl font-bold text-primary mb-2 block">
+          <Link to="/" className="text-xl font-bold text-primary">
             VendorIsland
           </Link>
-          <h1 className="text-lg font-medium mb-4">Product Finder</h1>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search products..." className="pl-10" />
-          </div>
         </div>
       </header>
 
       <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
+        <h1 className="text-xl font-bold text-primary">Product Finder</h1>
+        
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input placeholder="Search products..." className="pl-10" />
+        </div>
         {/* Trending Products */}
         <Card>
           <CardHeader>
