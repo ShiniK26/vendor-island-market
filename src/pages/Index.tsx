@@ -21,15 +21,77 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Image */}
+      {/* Image Marquee */}
       <div className="px-4 pt-8 pb-6 max-w-sm mx-auto">
-        <div className="w-full h-64 rounded-lg overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&h=600&fit=crop" 
-            alt="Mountain landscape with sun rays" 
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <Carousel
+          plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]}
+          className="w-full max-w-xs mx-auto"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=400&fit=crop" 
+                      alt="Modern tech workspace" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop" 
+                      alt="Advanced circuit technology" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=400&fit=crop" 
+                      alt="Code development interface" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=400&fit=crop" 
+                      alt="Web development platform" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
 
       {/* Hero Section */}
