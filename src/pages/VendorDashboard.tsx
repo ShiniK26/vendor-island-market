@@ -10,10 +10,15 @@ const VendorDashboard = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold text-primary">Dashboard</h1>
-          <Button variant="outline" size="sm">
-            <User className="h-4 w-4" />
-          </Button>
+          <Link to="/" className="text-xl font-bold text-primary">
+            VendorIsland
+          </Link>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-medium">Dashboard</h1>
+            <Button variant="outline" size="sm">
+              <User className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </header>
 

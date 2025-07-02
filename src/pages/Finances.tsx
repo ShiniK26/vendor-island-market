@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Wallet } from "lucide-react";
+import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 
 const Finances = () => {
@@ -35,8 +36,11 @@ const Finances = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
-        <div className="max-w-sm mx-auto">
-          <h1 className="text-xl font-bold text-primary">Finances</h1>
+        <div className="max-w-sm mx-auto flex justify-between items-center">
+          <Link to="/" className="text-xl font-bold text-primary">
+            VendorIsland
+          </Link>
+          <h1 className="text-lg font-medium">Finances</h1>
         </div>
       </header>
 
