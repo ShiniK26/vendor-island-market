@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 
@@ -43,10 +43,13 @@ const ProductFinder = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
-        <div className="max-w-sm mx-auto">
+        <div className="max-w-sm mx-auto flex justify-between items-center">
           <Link to="/" className="text-xl font-bold text-primary">
             VendorIsland
           </Link>
+          <Button variant="outline" size="sm">
+            <User className="h-4 w-4" />
+          </Button>
         </div>
       </header>
 
