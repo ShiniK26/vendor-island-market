@@ -21,7 +21,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <div className="px-4 pt-8 pb-6 max-w-sm mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-4 text-foreground">
+        <h2 className="text-3xl font-bold mb-4 text-foreground animate-fade-in">
           Start Your Own Marketplace
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
