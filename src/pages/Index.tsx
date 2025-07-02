@@ -88,7 +88,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <div className="px-4 pb-6 max-w-sm mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-4 text-foreground">
+        <h2 className="text-3xl font-bold mb-4 mt-8 text-foreground">
           Start Your Own Marketplace
         </h2>
         <p className="text-muted-foreground mb-8 leading-relaxed">
