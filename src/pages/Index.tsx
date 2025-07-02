@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { User, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
+import Autoplay from "embla-carousel-autoplay";
 
 const Index = () => {
   return (
@@ -19,8 +21,81 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Image Marquee */}
+      <div className="px-4 pt-8 pb-6 max-w-sm mx-auto">
+        <Carousel
+          plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]}
+          className="w-full max-w-xs mx-auto"
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=400&fit=crop" 
+                      alt="Modern tech workspace" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop" 
+                      alt="Advanced circuit technology" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=400&fit=crop" 
+                      alt="Code development interface" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <img 
+                      src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=400&h=400&fit=crop" 
+                      alt="Web development platform" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
+
       {/* Hero Section */}
-      <div className="px-4 pt-8 pb-6 max-w-sm mx-auto text-center">
+      <div className="px-4 pb-6 max-w-sm mx-auto text-center">
         <h2 className="text-3xl font-bold mb-4 text-foreground">
           Start Your Own Marketplace
         </h2>
@@ -48,7 +123,7 @@ const Index = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg">Easy Store Setup</CardTitle>
             <CardDescription>
-              Create your branded storefront in minutes
+              Launch your decentralized storefront with cutting-edge blockchain technology. No coding required - our intuitive dashboard makes Web3 commerce accessible to everyone, from complete beginners to seasoned entrepreneurs.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -57,16 +132,16 @@ const Index = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-lg">Dropshipping Integration</CardTitle>
             <CardDescription>
-              Connect with suppliers and import products instantly
+              Seamlessly connect with verified suppliers through our smart contract ecosystem. Automated inventory sync, transparent supply chains, and instant product imports powered by distributed ledger technology for maximum efficiency.
             </CardDescription>
           </CardHeader>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg">Mobile-First Design</CardTitle>
+            <CardTitle className="text-lg">User-Friendly Design</CardTitle>
             <CardDescription>
-              Optimized for mobile shopping experience
+              Experience next-generation mobile commerce with progressive web app technology. Our responsive interface adapts perfectly to any device while maintaining lightning-fast performance and intuitive navigation for modern users.
             </CardDescription>
           </CardHeader>
         </Card>
