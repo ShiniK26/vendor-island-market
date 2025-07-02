@@ -44,12 +44,10 @@ const ProductFinder = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto">
-          <div className="flex justify-between items-center mb-4">
-            <Link to="/" className="text-xl font-bold text-primary">
-              VendorIsland
-            </Link>
-            <h1 className="text-lg font-medium">Product Finder</h1>
-          </div>
+          <Link to="/" className="text-xl font-bold text-primary mb-2 block">
+            VendorIsland
+          </Link>
+          <h1 className="text-lg font-medium mb-4">Product Finder</h1>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Search products..." className="pl-10" />
