@@ -23,6 +23,11 @@ import FundPassword from "./pages/FundPassword";
 import AboutUs from "./pages/AboutUs";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CryptoDeposit from "./pages/CryptoDeposit";
+import DepositBTC from "./pages/DepositBTC";
+import DepositETH from "./pages/DepositETH";
+import DepositUSDTTRC from "./pages/DepositUSDTTRC";
+import DepositUSDTERC from "./pages/DepositUSDTERC";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +57,11 @@ const App = () => (
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/crypto-deposit" element={<CryptoDeposit />} />
+          <Route path="/deposit/btc" element={<DepositBTC />} />
+          <Route path="/deposit/eth" element={<DepositETH />} />
+          <Route path="/deposit/usdt-trc" element={<DepositUSDTTRC />} />
+          <Route path="/deposit/usdt-erc" element={<DepositUSDTERC />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

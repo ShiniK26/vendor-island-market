@@ -66,8 +66,8 @@ const Finances = () => {
               <Button variant="secondary" size="sm" className="flex-1">
                 Withdraw
               </Button>
-              <Button variant="outline" size="sm" className="flex-1 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10">
-                Add Funds
+              <Button variant="outline" size="sm" className="flex-1 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10" asChild>
+                <Link to="/crypto-deposit">Add Funds</Link>
               </Button>
             </div>
           </CardContent>

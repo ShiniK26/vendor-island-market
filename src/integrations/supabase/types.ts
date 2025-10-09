@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      deposit_requests: {
+        Row: {
+          amount: number
+          created_at: string
+          crypto_type: Database["public"]["Enums"]["crypto_type"]
+          id: string
+          receipt_url: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          crypto_type: Database["public"]["Enums"]["crypto_type"]
+          id?: string
+          receipt_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          crypto_type?: Database["public"]["Enums"]["crypto_type"]
+          id?: string
+          receipt_url?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +55,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      crypto_type: "BTC" | "ETH" | "USDT_TRC" | "USDT_ERC"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +182,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      crypto_type: ["BTC", "ETH", "USDT_TRC", "USDT_ERC"],
+    },
   },
 } as const
