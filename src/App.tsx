@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import VendorSignup from "./pages/VendorSignup";
-import Login from "./pages/Login";
 import VendorDashboard from "./pages/VendorDashboard";
 import ProductManagement from "./pages/ProductManagement";
 import VendorStorefront from "./pages/VendorStorefront";
@@ -42,7 +41,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/vendor-signup" element={<VendorSignup />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<VendorDashboard />} />
           <Route path="/products" element={<ProductManagement />} />
           <Route path="/storefront" element={<VendorStorefront />} />

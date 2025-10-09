@@ -15,7 +15,7 @@ const VendorSignup = () => {
             VendorIsland
           </Link>
           <Button variant="ghost" size="sm" asChild>
-            <Link to="/login">Login</Link>
+            <Link to="/auth">Login</Link>
           </Button>
         </div>
       </header>
@@ -78,7 +78,7 @@ const VendorSignup = () => {
               <span className="text-sm text-muted-foreground">
                 Already have an account?{" "}
               </span>
-              <Link to="/login" className="text-sm text-primary hover:underline">
+              <Link to="/auth" className="text-sm text-primary hover:underline">
                 Sign in
               </Link>
             </div>
