@@ -4,6 +4,7 @@ import { User, UserPlus } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
+import ProfileMenu from "@/components/ProfileMenu";
 
 const VendorDashboard = () => {
   return (
@@ -17,9 +18,11 @@ const VendorDashboard = () => {
               VendorIsland
             </Link>
           </div>
-          <Button variant="outline" size="sm">
-            <User className="h-4 w-4" />
-          </Button>
+          <ProfileMenu>
+            <Button variant="outline" size="sm">
+              <User className="h-4 w-4" />
+            </Button>
+          </ProfileMenu>
         </div>
       </header>
 
