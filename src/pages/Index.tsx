@@ -13,7 +13,7 @@ const Index = () => {
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold text-primary">VendorIsland</h1>
           <Button variant="outline" size="sm" asChild>
-            <Link to="/login">
+            <Link to="/auth">
               <User className="mr-2 h-4 w-4" />
               Login
             </Link>
