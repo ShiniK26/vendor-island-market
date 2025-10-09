@@ -28,6 +28,7 @@ import DepositBTC from "./pages/DepositBTC";
 import DepositETH from "./pages/DepositETH";
 import DepositUSDTTRC from "./pages/DepositUSDTTRC";
 import DepositUSDTERC from "./pages/DepositUSDTERC";
+import Auth from "./pages/Auth";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/vendor-signup" element={<VendorSignup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<VendorDashboard />} />

@@ -47,14 +47,42 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          account_level: Database["public"]["Enums"]["account_level"]
+          created_at: string
+          id: string
+          updated_at: string
+          user_display_id: string
+        }
+        Insert: {
+          account_level?: Database["public"]["Enums"]["account_level"]
+          created_at?: string
+          id: string
+          updated_at?: string
+          user_display_id: string
+        }
+        Update: {
+          account_level?: Database["public"]["Enums"]["account_level"]
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_display_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_user_display_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
+      account_level: "normal" | "vip" | "restricted"
       crypto_type: "BTC" | "ETH" | "USDT_TRC" | "USDT_ERC"
     }
     CompositeTypes: {
@@ -183,6 +211,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      account_level: ["normal", "vip", "restricted"],
       crypto_type: ["BTC", "ETH", "USDT_TRC", "USDT_ERC"],
     },
   },
