@@ -140,15 +140,35 @@ const ProfileMenu = ({ children }: { children: React.ReactNode }) => {
                 <Separator />
 
                 <div className="grid grid-cols-2 gap-3">
-                  <Button variant="outline" className="w-full" size="sm">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => {
+                      toast({
+                        title: "Coming Soon",
+                        description: "Notifications feature will be available soon!",
+                      });
+                    }}
+                  >
                     <Bell className="h-4 w-4 mr-2" />
                     Notifications
                   </Button>
-                  <Button variant="outline" className="w-full" size="sm">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => navigate("/finances")}
+                  >
                     <CreditCard className="h-4 w-4 mr-2" />
                     Billing
                   </Button>
-                  <Button variant="outline" className="w-full" size="sm">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => navigate("/basic-verification")}
+                  >
                     <ShieldCheck className="h-4 w-4 mr-2" />
                     Security
                   </Button>
