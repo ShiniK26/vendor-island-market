@@ -12,12 +12,12 @@ const Index = () => {
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold text-primary">VendorIsland</h1>
-          <Link to="/auth">
-            <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" asChild>
+            <Link to="/login">
               <User className="mr-2 h-4 w-4" />
               Login
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </header>
 
