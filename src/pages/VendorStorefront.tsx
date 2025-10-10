@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { User } from "lucide-react";
 import { Link } from "react-router-dom";
+import BackButton from "@/components/BackButton";
 
 const VendorStorefront = () => {
   const products = [
@@ -49,6 +50,7 @@ const VendorStorefront = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
+          <BackButton />
           <Link to="/dashboard" className="text-xl font-bold text-primary">
             Trendy Fashion Store
           </Link>

@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
+import BackButton from "@/components/BackButton";
 
 const Market = () => {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ const Market = () => {
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
+            <BackButton />
             <BurgerMenu />
             <Link to="/" className="text-xl font-bold text-primary">
               VendorIsland
