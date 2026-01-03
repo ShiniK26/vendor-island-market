@@ -1,38 +1,41 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wallet, User } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Wallet, User, Lock, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
+import { useWallet } from "@/hooks/useWallet";
+import { Skeleton } from "@/components/ui/skeleton";
+import { formatDistanceToNow } from "date-fns";
 
 const Finances = () => {
-  const transactions = [
-    {
-      id: 1,
-      type: "Sale",
-      amount: "+$49.99",
-      description: "Summer Dress - Order #1234",
-      date: "Today, 2:30 PM",
-      status: "Completed"
-    },
-    {
-      id: 2,
-      type: "Payout",
-      amount: "-$125.50",
-      description: "Weekly payout to bank",
-      date: "Yesterday, 9:00 AM",
-      status: "Processing"
-    },
-    {
-      id: 3,
-      type: "Sale",
-      amount: "+$89.99",
-      description: "Winter Jacket - Order #1235",
-      date: "Jan 14, 4:15 PM",
-      status: "Completed"
+  const { wallet, transactions, loading } = useWallet();
+
+  const formatAmount = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+
+  const getTransactionIcon = (type: string) => {
+    switch (type) {
+      case "deposit":
+        return <ArrowDownLeft className="h-4 w-4 text-green-600" />;
+      case "withdrawal":
+        return <ArrowUpRight className="h-4 w-4 text-red-600" />;
+      case "reserve":
+        return <Lock className="h-4 w-4 text-amber-600" />;
+      case "release":
+        return <Lock className="h-4 w-4 text-blue-600" />;
+      case "profit":
+        return <ArrowDownLeft className="h-4 w-4 text-green-600" />;
+      default:
+        return <Wallet className="h-4 w-4" />;
     }
-  ];
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
@@ -55,13 +58,20 @@ const Finances = () => {
 
       <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
         <h1 className="text-xl font-bold text-primary">Finances</h1>
+        
         {/* Balance Card */}
         <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm opacity-90">Available Balance</p>
-                <p className="text-3xl font-bold">$2,456.78</p>
+                {loading ? (
+                  <Skeleton className="h-9 w-32 bg-primary-foreground/20" />
+                ) : (
+                  <p className="text-3xl font-bold">
+                    {formatAmount(wallet?.available_balance || 0)}
+                  </p>
+                )}
               </div>
               <Wallet className="h-8 w-8 opacity-90" />
             </div>
@@ -76,33 +86,55 @@ const Finances = () => {
           </CardContent>
         </Card>
 
-        {/* Stats */}
+        {/* Wallet Stats */}
         <div className="grid grid-cols-2 gap-3">
           <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-xl font-bold text-primary">$4,892.50</div>
-              <div className="text-xs text-muted-foreground">This Month</div>
-              <div className="text-xs text-green-600">+23%</div>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <Lock className="h-4 w-4 text-amber-600" />
+                <span className="text-xs text-muted-foreground">Reserved</span>
+              </div>
+              {loading ? (
+                <Skeleton className="h-6 w-20" />
+              ) : (
+                <div className="text-lg font-bold text-primary">
+                  {formatAmount(wallet?.reserved_balance || 0)}
+                </div>
+              )}
+              <div className="text-xs text-muted-foreground">For pending orders</div>
             </CardContent>
           </Card>
           <Card>
-            <CardContent className="p-4 text-center">
-              <div className="text-xl font-bold text-primary">$15,234.75</div>
-              <div className="text-xs text-muted-foreground">All Time</div>
-              <div className="text-xs text-green-600">Total Revenue</div>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-1">
+                <Wallet className="h-4 w-4 text-green-600" />
+                <span className="text-xs text-muted-foreground">Total</span>
+              </div>
+              {loading ? (
+                <Skeleton className="h-6 w-20" />
+              ) : (
+                <div className="text-lg font-bold text-primary">
+                  {formatAmount((wallet?.available_balance || 0) + (wallet?.reserved_balance || 0))}
+                </div>
+              )}
+              <div className="text-xs text-muted-foreground">Available + Reserved</div>
             </CardContent>
           </Card>
         </div>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-3">
-          <Button variant="outline" className="h-16 flex-col">
-            <span className="text-xl mb-1">📊</span>
-            <span className="text-xs">Analytics</span>
+          <Button variant="outline" className="h-16 flex-col" asChild>
+            <Link to="/pricing-rules">
+              <span className="text-xl mb-1">💰</span>
+              <span className="text-xs">Pricing Rules</span>
+            </Link>
           </Button>
-          <Button variant="outline" className="h-16 flex-col">
-            <span className="text-xl mb-1">📄</span>
-            <span className="text-xs">Reports</span>
+          <Button variant="outline" className="h-16 flex-col" asChild>
+            <Link to="/orders">
+              <span className="text-xl mb-1">📦</span>
+              <span className="text-xs">Orders</span>
+            </Link>
           </Button>
         </div>
 
@@ -112,29 +144,43 @@ const Finances = () => {
             <CardTitle className="text-lg">Recent Transactions</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {transactions.map((transaction) => (
-              <div key={transaction.id} className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-medium text-sm">{transaction.type}</h3>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      transaction.status === 'Completed' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-yellow-100 text-yellow-700'
-                    }`}>
-                      {transaction.status}
-                    </span>
+            {loading ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="flex justify-between items-start">
+                  <div className="flex-1 space-y-2">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-3 w-32" />
                   </div>
-                  <p className="text-xs text-muted-foreground">{transaction.description}</p>
-                  <p className="text-xs text-muted-foreground">{transaction.date}</p>
+                  <Skeleton className="h-4 w-16" />
                 </div>
-                <span className={`font-bold text-sm ${
-                  transaction.amount.startsWith('+') ? 'text-green-600' : 'text-red-600'
-                }`}>
-                  {transaction.amount}
-                </span>
-              </div>
-            ))}
+              ))
+            ) : transactions.length > 0 ? (
+              transactions.map((tx) => (
+                <div key={tx.id} className="flex justify-between items-start">
+                  <div className="flex items-start gap-2">
+                    {getTransactionIcon(tx.type)}
+                    <div>
+                      <h3 className="font-medium text-sm capitalize">{tx.type}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {tx.description || "Transaction"}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {formatDistanceToNow(new Date(tx.created_at))} ago
+                      </p>
+                    </div>
+                  </div>
+                  <span className={`font-bold text-sm ${
+                    tx.amount > 0 ? "text-green-600" : "text-red-600"
+                  }`}>
+                    {tx.amount > 0 ? "+" : ""}{formatAmount(tx.amount)}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-sm text-muted-foreground py-4">
+                No transactions yet. Deposit funds to get started.
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

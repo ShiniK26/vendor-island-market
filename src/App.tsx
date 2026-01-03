@@ -28,6 +28,8 @@ import DepositETH from "./pages/DepositETH";
 import DepositUSDTTRC from "./pages/DepositUSDTTRC";
 import DepositUSDTERC from "./pages/DepositUSDTERC";
 import Auth from "./pages/Auth";
+import MyCatalog from "./pages/MyCatalog";
+import PricingRules from "./pages/PricingRules";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +64,8 @@ const App = () => (
           <Route path="/deposit/eth" element={<DepositETH />} />
           <Route path="/deposit/usdt-trc" element={<DepositUSDTTRC />} />
           <Route path="/deposit/usdt-erc" element={<DepositUSDTERC />} />
+          <Route path="/catalog" element={<MyCatalog />} />
+          <Route path="/pricing-rules" element={<PricingRules />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
