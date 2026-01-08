@@ -7,155 +7,140 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Star, Package, TrendingUp, Percent, DollarSign, ShoppingCart, Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+
+// Mock data for testing
+const mockProducts: Record<string, {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  costPrice: number;
+  sellingPrice: number;
+  originalPrice: number;
+  supplier: string;
+  shippingTime: string;
+  rating: number;
+  totalReviews: number;
+  totalOrders: number;
+  totalRevenue: number;
+  status: string;
+}> = {
+  "mock-1": {
+    id: "mock-1",
+    name: "Summer Dress",
+    image: "🌸",
+    description: "A beautiful summer dress perfect for warm weather occasions. Made with breathable cotton fabric.",
+    costPrice: 25.00,
+    sellingPrice: 49.99,
+    originalPrice: 69.99,
+    supplier: "Fashion Wholesale Co.",
+    shippingTime: "7-14 days",
+    rating: 4.8,
+    totalReviews: 124,
+    totalOrders: 89,
+    totalRevenue: 4449.11,
+    status: "published"
+  },
+  "mock-2": {
+    id: "mock-2",
+    name: "Winter Jacket",
+    image: "🧥",
+    description: "Warm and stylish winter jacket with premium insulation. Perfect for cold weather.",
+    costPrice: 45.00,
+    sellingPrice: 89.99,
+    originalPrice: 119.99,
+    supplier: "OuterWear Suppliers",
+    shippingTime: "10-18 days",
+    rating: 4.6,
+    totalReviews: 89,
+    totalOrders: 67,
+    totalRevenue: 6029.33,
+    status: "published"
+  },
+  "mock-3": {
+    id: "mock-3",
+    name: "Casual Sneakers",
+    image: "👟",
+    description: "Comfortable everyday sneakers with cushioned soles. Available in multiple sizes.",
+    costPrice: 35.00,
+    sellingPrice: 79.99,
+    originalPrice: 99.99,
+    supplier: "Footwear Direct",
+    shippingTime: "5-12 days",
+    rating: 4.9,
+    totalReviews: 203,
+    totalOrders: 156,
+    totalRevenue: 12478.44,
+    status: "published"
+  },
+  "mock-4": {
+    id: "mock-4",
+    name: "Designer Handbag",
+    image: "👜",
+    description: "Elegant designer handbag with premium leather finish. Spacious interior with multiple compartments.",
+    costPrice: 55.00,
+    sellingPrice: 129.99,
+    originalPrice: 179.99,
+    supplier: "Luxury Bags Inc.",
+    shippingTime: "8-15 days",
+    rating: 4.7,
+    totalReviews: 156,
+    totalOrders: 98,
+    totalRevenue: 12739.02,
+    status: "published"
+  }
+};
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const { toast } = useToast();
   
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [product, setProduct] = useState<{
-    id: string;
-    name: string;
-    images: string[] | null;
-    description: string | null;
-    cost_price: number;
-    selling_price: number | null;
-    shipping_cost: number;
-    supplier_name: string | null;
-    supplier_link: string | null;
-    shipping_time_min: number | null;
-    shipping_time_max: number | null;
-    status: string;
-  } | null>(null);
+  const product = productId ? mockProducts[productId] : null;
 
-  const [profitAmount, setProfitAmount] = useState(10);
+  const [profitAmount, setProfitAmount] = useState(product ? product.sellingPrice - product.costPrice : 10);
   const [handlingFee, setHandlingFee] = useState(2);
   const [discountPercent, setDiscountPercent] = useState(0);
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      if (!productId) return;
-      
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('catalog_products')
-        .select('*')
-        .eq('id', productId)
-        .maybeSingle();
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex flex-col items-center justify-center p-4">
+        <p className="text-muted-foreground mb-4">Product not found</p>
+        <Button onClick={() => navigate(-1)}>Go Back</Button>
+      </div>
+    );
+  }
 
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to load product",
-          variant: "destructive"
-        });
-        navigate(-1);
-        return;
-      }
-
-      if (!data) {
-        toast({
-          title: "Not Found",
-          description: "Product not found",
-          variant: "destructive"
-        });
-        navigate(-1);
-        return;
-      }
-
-      setProduct(data);
-      // Calculate initial profit from existing selling price
-      if (data.selling_price) {
-        const existingProfit = data.selling_price - data.cost_price - data.shipping_cost;
-        setProfitAmount(Math.max(0, existingProfit));
-        setHandlingFee(data.shipping_cost);
-      }
-      setLoading(false);
-    };
-
-    fetchProduct();
-  }, [productId, navigate, toast]);
-
-  const costPrice = product?.cost_price || 0;
+  const costPrice = product.costPrice;
   const calculatedPrice = costPrice + profitAmount + handlingFee;
   const finalPrice = discountPercent > 0 ? calculatedPrice * (1 - discountPercent / 100) : calculatedPrice;
   const profit = finalPrice - costPrice;
 
   const handleSavePricing = async () => {
-    if (!product) return;
-    
     setSaving(true);
-    const { error } = await supabase
-      .from('catalog_products')
-      .update({
-        selling_price: finalPrice,
-        shipping_cost: handlingFee
-      })
-      .eq('id', product.id);
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to save pricing",
-        variant: "destructive"
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Pricing saved successfully"
-      });
-      setProduct({ ...product, selling_price: finalPrice, shipping_cost: handlingFee });
-    }
+    // Simulate save delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    toast({
+      title: "Success",
+      description: "Pricing saved successfully"
+    });
     setSaving(false);
   };
 
   const handleUnpublish = async () => {
-    if (!product) return;
-    
     setSaving(true);
-    const { error } = await supabase
-      .from('catalog_products')
-      .update({ status: 'draft' })
-      .eq('id', product.id);
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to unpublish product",
-        variant: "destructive"
-      });
-    } else {
-      toast({
-        title: "Success",
-        description: "Product moved to drafts"
-      });
-      navigate(-1);
-    }
+    // Simulate save delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    toast({
+      title: "Success",
+      description: "Product moved to drafts"
+    });
     setSaving(false);
+    navigate(-1);
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!product) {
-    return null;
-  }
-
-  const shippingTime = product.shipping_time_min && product.shipping_time_max 
-    ? `${product.shipping_time_min}-${product.shipping_time_max} days`
-    : "N/A";
-
-  const productImage = product.images && product.images.length > 0 ? product.images[0] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -174,12 +159,8 @@ const ProductDetail = () => {
         <Card>
           <CardContent className="p-4">
             <div className="flex gap-4">
-              <div className="w-20 h-20 bg-secondary rounded-lg flex items-center justify-center text-4xl shrink-0 overflow-hidden">
-                {productImage ? (
-                  <img src={productImage} alt={product.name} className="w-full h-full object-cover" />
-                ) : (
-                  "📦"
-                )}
+              <div className="w-20 h-20 bg-secondary rounded-lg flex items-center justify-center text-4xl shrink-0">
+                {product.image}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
@@ -189,10 +170,10 @@ const ProductDetail = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                  {product.description || "No description"}
+                  {product.description}
                 </p>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Supplier: {product.supplier_name || "Unknown"}
+                  Supplier: {product.supplier}
                 </p>
               </div>
             </div>
@@ -205,16 +186,16 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-yellow-500 mb-1">
                 <Star className="h-4 w-4 fill-current" />
-                <span className="font-bold">--</span>
+                <span className="font-bold">{product.rating}</span>
               </div>
-              <p className="text-xs text-muted-foreground">No reviews yet</p>
+              <p className="text-xs text-muted-foreground">{product.totalReviews} reviews</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-primary mb-1">
                 <ShoppingCart className="h-4 w-4" />
-                <span className="font-bold">0</span>
+                <span className="font-bold">{product.totalOrders}</span>
               </div>
               <p className="text-xs text-muted-foreground">Total orders</p>
             </CardContent>
@@ -223,7 +204,7 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-green-600 mb-1">
                 <DollarSign className="h-4 w-4" />
-                <span className="font-bold">$0.00</span>
+                <span className="font-bold">${product.totalRevenue.toFixed(2)}</span>
               </div>
               <p className="text-xs text-muted-foreground">Total revenue</p>
             </CardContent>
@@ -232,7 +213,7 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-blue-600 mb-1">
                 <Package className="h-4 w-4" />
-                <span className="font-bold">{shippingTime}</span>
+                <span className="font-bold">{product.shippingTime}</span>
               </div>
               <p className="text-xs text-muted-foreground">Shipping time</p>
             </CardContent>
@@ -342,7 +323,7 @@ const ProductDetail = () => {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Profit After Discount</span>
-                    <span className={`font-medium ${profit > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <span className={`font-medium ${(finalPrice - costPrice) > 0 ? 'text-green-600' : 'text-red-600'}`}>
                       ${(finalPrice - costPrice).toFixed(2)}
                     </span>
                   </div>
@@ -372,22 +353,22 @@ const ProductDetail = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Views (30 days)</span>
-                    <span className="font-medium">--</span>
+                    <span className="font-medium">1,234</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Conversion Rate</span>
-                    <span className="font-medium">--</span>
+                    <span className="font-medium">7.2%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Average Rating</span>
                     <span className="font-medium flex items-center gap-1">
                       <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                      --
+                      {product.rating}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Return Rate</span>
-                    <span className="font-medium">--</span>
+                    <span className="font-medium text-green-600">2.1%</span>
                   </div>
                 </div>
 
@@ -395,9 +376,24 @@ const ProductDetail = () => {
 
                 <div>
                   <h4 className="text-sm font-medium mb-2">Recent Reviews</h4>
-                  <p className="text-sm text-muted-foreground text-center py-4">
-                    No reviews yet
-                  </p>
+                  <div className="space-y-2">
+                    <div className="bg-secondary/30 rounded-lg p-3">
+                      <div className="flex items-center gap-1 mb-1">
+                        {[1,2,3,4,5].map(i => (
+                          <Star key={i} className={`h-3 w-3 ${i <= 5 ? 'text-yellow-500 fill-current' : 'text-muted'}`} />
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground">"Great quality, fast shipping!"</p>
+                    </div>
+                    <div className="bg-secondary/30 rounded-lg p-3">
+                      <div className="flex items-center gap-1 mb-1">
+                        {[1,2,3,4,5].map(i => (
+                          <Star key={i} className={`h-3 w-3 ${i <= 4 ? 'text-yellow-500 fill-current' : 'text-muted'}`} />
+                        ))}
+                      </div>
+                      <p className="text-xs text-muted-foreground">"Love this product, will buy again"</p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
