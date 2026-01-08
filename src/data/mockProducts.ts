@@ -1,4 +1,4 @@
-// Shared mock product data store
+// Shared mock product data store with localStorage persistence
 export interface MockProduct {
   id: string;
   name: string;
@@ -16,7 +16,9 @@ export interface MockProduct {
   status: string;
 }
 
-export const mockProducts: Record<string, MockProduct> = {
+const STORAGE_KEY = "mock_products_data";
+
+const defaultProducts: Record<string, MockProduct> = {
   "mock-1": {
     id: "mock-1",
     name: "Summer Dress",
@@ -83,12 +85,37 @@ export const mockProducts: Record<string, MockProduct> = {
   }
 };
 
+// Load from localStorage or use defaults
+const loadProducts = (): Record<string, MockProduct> => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error("Failed to load products from localStorage:", e);
+  }
+  return { ...defaultProducts };
+};
+
+// Save to localStorage
+const saveProducts = () => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(mockProducts));
+  } catch (e) {
+    console.error("Failed to save products to localStorage:", e);
+  }
+};
+
+export const mockProducts: Record<string, MockProduct> = loadProducts();
+
 // Helper to get all products as array
 export const getMockProductsArray = () => Object.values(mockProducts);
 
-// Helper to update a product
+// Helper to update a product (persists to localStorage)
 export const updateMockProduct = (productId: string, updates: Partial<MockProduct>) => {
   if (mockProducts[productId]) {
     mockProducts[productId] = { ...mockProducts[productId], ...updates };
+    saveProducts();
   }
 };
