@@ -1,11 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 import { User } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
 const OrderManagement = () => {
+  const [autoConfirmOrder, setAutoConfirmOrder] = useState(false);
+  
   const orders = [{
     id: "#1234",
     customer: "John Doe",
@@ -71,10 +76,17 @@ const OrderManagement = () => {
         </div>
 
         {/* Filters */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Button variant="outline" size="sm" className="flex-1">All</Button>
           <Button variant="outline" size="sm" className="flex-1">Delivered</Button>
-          <Button variant="outline" size="sm" className="flex-1">Shipped</Button>
+          <div className="flex items-center gap-2">
+            <Switch
+              id="auto-confirm"
+              checked={autoConfirmOrder}
+              onCheckedChange={setAutoConfirmOrder}
+            />
+            <Label htmlFor="auto-confirm" className="text-xs whitespace-nowrap">Auto Confirm Order</Label>
+          </div>
         </div>
 
         {/* Orders List */}
