@@ -8,7 +8,7 @@ const BackButton = () => {
     <Button
       variant="outline"
       size="icon"
-      onClick={() => navigate('/dashboard')}
+      onClick={() => navigate(-1)}
     >
       &lt;
     </Button>
