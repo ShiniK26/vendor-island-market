@@ -123,6 +123,12 @@ const ProductDetail = () => {
     setSaving(true);
     // Simulate save delay
     await new Promise(resolve => setTimeout(resolve, 500));
+    
+    // Update mock data to persist the change
+    if (productId && mockProducts[productId]) {
+      mockProducts[productId].sellingPrice = finalPrice;
+    }
+    
     toast({
       title: "Success",
       description: "Pricing saved successfully"
