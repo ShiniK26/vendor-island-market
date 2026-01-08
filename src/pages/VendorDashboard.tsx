@@ -30,7 +30,7 @@ const VendorDashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-lg">Welcome back, "random string"!</CardTitle>
-            <CardDescription>Analytic reports</CardDescription>
+            <CardDescription>Overall Analytic Report</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
