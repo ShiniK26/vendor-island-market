@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const BurgerMenu = () => {
   const [open, setOpen] = useState(false);
@@ -50,7 +51,10 @@ const BurgerMenu = () => {
       </SheetTrigger>
       <SheetContent side="left" className="w-[250px] sm:w-[290px]">
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+          <div className="flex items-center justify-between">
+            <SheetTitle>Menu</SheetTitle>
+            <ThemeToggle />
+          </div>
         </SheetHeader>
         <div className="mt-6 space-y-6">
           {menuSections.map((section, sectionIndex) => (
