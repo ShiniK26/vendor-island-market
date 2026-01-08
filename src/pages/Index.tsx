@@ -110,8 +110,7 @@ Create your niche vendor space in minutes. Import products into your catalog, pu
             <CardTitle className="text-lg">Dropshipping Integration</CardTitle>
             <CardDescription>
               
-Connect to suppliers like CJ Dropshipping and import products instantly. When orders come in, your wallet reserves the cost, fulfillment runs automatically, and tracking updates sync 
- end-to-end with no manual forwarding.
+Connect to verified dropshipping suppliers and import products instantly. When orders come in, your wallet reserves the cost, fulfillment runs automatically, and tracking updates sync end-to-end with no manual forwarding.
 
 
 
