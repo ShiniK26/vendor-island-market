@@ -182,8 +182,7 @@ const Market = () => {
             {stores.map(store => <Card key={store.id}>
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">
-                      <Store className="h-6 w-6" />
+                    <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center">Upgrade to VIP to create up to 5 collection<Store className="h-6 w-6" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium truncate">{store.name}</h3>
