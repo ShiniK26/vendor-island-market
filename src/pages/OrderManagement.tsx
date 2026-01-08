@@ -5,37 +5,30 @@ import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
-
 const OrderManagement = () => {
-  const orders = [
-    {
-      id: "#1234",
-      customer: "John Doe",
-      product: "Summer Dress",
-      amount: "$49.99",
-      status: "Processing",
-      date: "2024-01-15"
-    },
-    {
-      id: "#1235",
-      customer: "Jane Smith",
-      product: "Winter Jacket",
-      amount: "$89.99",
-      status: "Shipped",
-      date: "2024-01-14"
-    },
-    {
-      id: "#1236",
-      customer: "Mike Johnson",
-      product: "Casual Sneakers",
-      amount: "$79.99",
-      status: "Delivered",
-      date: "2024-01-13"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
+  const orders = [{
+    id: "#1234",
+    customer: "John Doe",
+    product: "Summer Dress",
+    amount: "$49.99",
+    status: "Processing",
+    date: "2024-01-15"
+  }, {
+    id: "#1235",
+    customer: "Jane Smith",
+    product: "Winter Jacket",
+    amount: "$89.99",
+    status: "Shipped",
+    date: "2024-01-14"
+  }, {
+    id: "#1236",
+    customer: "Mike Johnson",
+    product: "Casual Sneakers",
+    amount: "$79.99",
+    status: "Delivered",
+    date: "2024-01-13"
+  }];
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
@@ -80,25 +73,20 @@ const OrderManagement = () => {
         {/* Filters */}
         <div className="flex gap-2">
           <Button variant="outline" size="sm" className="flex-1">All</Button>
-          <Button variant="outline" size="sm" className="flex-1">Pending</Button>
+          <Button variant="outline" size="sm" className="flex-1">Delivered</Button>
           <Button variant="outline" size="sm" className="flex-1">Shipped</Button>
         </div>
 
         {/* Orders List */}
         <div className="space-y-3">
-          {orders.map((order) => (
-            <Card key={order.id}>
+          {orders.map(order => <Card key={order.id}>
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-2">
                   <div>
                     <h3 className="font-medium">{order.id}</h3>
                     <p className="text-sm text-muted-foreground">{order.customer}</p>
                   </div>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    order.status === 'Processing' ? 'bg-yellow-100 text-yellow-700' :
-                    order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' :
-                    'bg-green-100 text-green-700'
-                  }`}>
+                  <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Processing' ? 'bg-yellow-100 text-yellow-700' : order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>
                     {order.status}
                   </span>
                 </div>
@@ -110,14 +98,11 @@ const OrderManagement = () => {
                   <span className="font-bold text-primary">{order.amount}</span>
                 </div>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
       </div>
 
       <BottomNavigation />
-    </div>
-  );
+    </div>;
 };
-
 export default OrderManagement;
