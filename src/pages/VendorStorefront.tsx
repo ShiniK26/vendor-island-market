@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { User } from "lucide-react";
+import { User, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 
@@ -110,8 +110,9 @@ const VendorStorefront = () => {
                     <span>⭐ {product.rating}</span>
                     <span>({product.reviews})</span>
                   </div>
-                  <Button size="sm" className="w-full">
-                    Add to Cart
+                  <Button size="sm" variant="outline" className="w-full gap-1">
+                    <Settings className="h-3 w-3" />
+                    Manage
                   </Button>
                 </div>
               </CardContent>
