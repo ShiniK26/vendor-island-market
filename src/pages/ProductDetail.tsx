@@ -32,11 +32,11 @@ const ProductDetail = () => {
     status: "published"
   };
 
-  const [profitMargin, setProfitMargin] = useState(25);
+  const [profitAmount, setProfitAmount] = useState(10);
   const [handlingFee, setHandlingFee] = useState(2);
   const [discountPercent, setDiscountPercent] = useState(0);
 
-  const calculatedPrice = product.costPrice * (1 + profitMargin / 100) + handlingFee;
+  const calculatedPrice = product.costPrice + profitAmount + handlingFee;
   const finalPrice = discountPercent > 0 ? calculatedPrice * (1 - discountPercent / 100) : calculatedPrice;
   const profit = finalPrice - product.costPrice;
 
@@ -144,14 +144,14 @@ const ProductDetail = () => {
                 <Separator />
                 
                 <div className="space-y-2">
-                  <Label htmlFor="profit-margin">Profit Margin (%)</Label>
+                  <Label htmlFor="profit-amount">Profit Amount ($)</Label>
                   <Input
-                    id="profit-margin"
+                    id="profit-amount"
                     type="number"
-                    value={profitMargin}
-                    onChange={(e) => setProfitMargin(Number(e.target.value))}
+                    value={profitAmount}
+                    onChange={(e) => setProfitAmount(Number(e.target.value))}
                     min={0}
-                    max={500}
+                    step={0.5}
                   />
                 </div>
 
