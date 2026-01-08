@@ -114,16 +114,16 @@ const VendorStorefront = () => {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Process Time</span>
+              <span className="text-sm text-muted-foreground">Process time</span>
               <span className="text-sm font-medium">Within 2 hours</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Ships from</span>
-              <span className="text-sm font-medium">United States</span>
+              <span className="text-sm text-muted-foreground">Ships to</span>
+              <span className="text-sm font-medium">Globally</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Member since</span>
-              <span className="text-sm font-medium">2024</span>
+              <span className="text-sm text-muted-foreground">Member score</span>
+              <span className="text-sm font-medium">250</span>
             </div>
           </CardContent>
         </Card>
