@@ -31,6 +31,7 @@ import DepositUSDTERC from "./pages/DepositUSDTERC";
 import Auth from "./pages/Auth";
 import MyCatalog from "./pages/MyCatalog";
 import PricingRules from "./pages/PricingRules";
+import ProductDetail from "./pages/ProductDetail";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
             <Route path="/deposit/usdt-erc" element={<DepositUSDTERC />} />
             <Route path="/catalog" element={<MyCatalog />} />
             <Route path="/pricing-rules" element={<PricingRules />} />
+            <Route path="/product/:productId" element={<ProductDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
