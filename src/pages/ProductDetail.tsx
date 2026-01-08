@@ -147,7 +147,7 @@ const ProductDetail = () => {
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-sm mx-auto flex items-center gap-3">
-          <Button variant="outline" size="icon" onClick={() => navigate(-1)}>
+          <Button variant="outline" size="icon" onClick={() => navigate('/storefront')}>
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <h1 className="text-lg font-bold">Product Details</h1>
