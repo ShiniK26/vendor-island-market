@@ -57,7 +57,7 @@ const VendorDashboard = () => {
           <Button className="w-full justify-start" variant="outline" asChild>
             <Link to="/products">
               <UserPlus className="mr-2 h-4 w-4" />
-              Add New Product
+              Find Product Sources
             </Link>
           </Button>
           
