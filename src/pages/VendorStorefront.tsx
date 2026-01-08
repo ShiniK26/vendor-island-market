@@ -5,50 +5,14 @@ import { User, Settings } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
+import { getMockProductsArray } from "@/data/mockProducts";
 
 const VendorStorefront = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Mock data for testing
-  const products = [
-    {
-      id: "mock-1",
-      name: "Summer Dress",
-      price: 49.99,
-      originalPrice: 69.99,
-      image: "🌸",
-      rating: 4.8,
-      reviews: 124
-    },
-    {
-      id: "mock-2",
-      name: "Winter Jacket",
-      price: 89.99,
-      originalPrice: 119.99,
-      image: "🧥",
-      rating: 4.6,
-      reviews: 89
-    },
-    {
-      id: "mock-3",
-      name: "Casual Sneakers",
-      price: 79.99,
-      originalPrice: 99.99,
-      image: "👟",
-      rating: 4.9,
-      reviews: 203
-    },
-    {
-      id: "mock-4",
-      name: "Designer Handbag",
-      price: 129.99,
-      originalPrice: 179.99,
-      image: "👜",
-      rating: 4.7,
-      reviews: 156
-    }
-  ];
+  // Get products from shared mock data store
+  const products = getMockProductsArray();
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -114,14 +78,14 @@ const VendorStorefront = () => {
                 <div className="p-3 space-y-2">
                   <h3 className="font-medium text-sm leading-tight">{product.name}</h3>
                   <div className="flex items-center gap-1">
-                    <span className="font-bold text-primary">${product.price.toFixed(2)}</span>
+                    <span className="font-bold text-primary">${product.sellingPrice.toFixed(2)}</span>
                     <span className="text-xs text-muted-foreground line-through">
                       ${product.originalPrice.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <span>⭐ {product.rating}</span>
-                    <span>({product.reviews})</span>
+                    <span>({product.totalReviews})</span>
                   </div>
                   <Button 
                     size="sm" 
