@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
-
 const VendorDashboard = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
       {/* Header */}
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
@@ -31,8 +29,8 @@ const VendorDashboard = () => {
         {/* Welcome Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Welcome back, Alex!</CardTitle>
-            <CardDescription>Trendy Fashion Store</CardDescription>
+            <CardTitle className="text-lg">Welcome back, "random string"!</CardTitle>
+            
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-4 text-center">
@@ -127,7 +125,7 @@ const VendorDashboard = () => {
                 <span className="text-sm font-medium">+23%</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Visitors</span>
+                <span className="text-sm text-muted-foreground">Bounce rate</span>
                 <span className="text-sm font-medium">+12%</span>
               </div>
               <div className="flex justify-between">
@@ -140,8 +138,6 @@ const VendorDashboard = () => {
       </div>
 
       <BottomNavigation />
-    </div>
-  );
+    </div>;
 };
-
 export default VendorDashboard;
