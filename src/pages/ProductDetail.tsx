@@ -98,9 +98,11 @@ const ProductDetail = () => {
   const { productId } = useParams();
   const { toast } = useToast();
   
-  const product = productId ? mockProducts[productId] : null;
-
-  const [profitAmount, setProfitAmount] = useState(product ? product.sellingPrice - product.costPrice : 10);
+  const initialProduct = productId ? mockProducts[productId] : null;
+  
+  // Use state to store product data so it persists after updates
+  const [product, setProduct] = useState(initialProduct);
+  const [profitAmount, setProfitAmount] = useState(initialProduct ? initialProduct.sellingPrice - initialProduct.costPrice : 10);
   const [handlingFee, setHandlingFee] = useState(2);
   const [discountPercent, setDiscountPercent] = useState(0);
   const [saving, setSaving] = useState(false);
@@ -121,17 +123,19 @@ const ProductDetail = () => {
 
   const handleSavePricing = async () => {
     setSaving(true);
-    // Simulate save delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    // Update mock data to persist the change
+    // Update local state to persist the change
+    setProduct(prev => prev ? { ...prev, sellingPrice: finalPrice } : prev);
+    
+    // Also update mock data for cross-page persistence
     if (productId && mockProducts[productId]) {
       mockProducts[productId].sellingPrice = finalPrice;
     }
     
     toast({
       title: "Success",
-      description: "Pricing saved successfully"
+      description: `Pricing updated to $${finalPrice.toFixed(2)}`
     });
     setSaving(false);
   };
