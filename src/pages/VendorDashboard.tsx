@@ -55,7 +55,7 @@ const VendorDashboard = () => {
           <h3 className="font-semibold text-foreground">Quick Actions</h3>
           
           <Button className="w-full justify-start" variant="outline" asChild>
-            <Link to="/products">
+            <Link to="/product-finder">
               <UserPlus className="mr-2 h-4 w-4" />
               Find Product Sources
             </Link>
