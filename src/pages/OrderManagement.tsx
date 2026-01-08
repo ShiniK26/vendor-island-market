@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { User } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -77,12 +80,15 @@ const OrderManagement = () => {
           </Card>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1">All</Button>
-          <Button variant="outline" size="sm" className="flex-1">Pending</Button>
-          <Button variant="outline" size="sm" className="flex-1">Shipped</Button>
-        </div>
+        {/* Auto Confirm Toggle */}
+        <Card>
+          <CardContent className="p-4 flex items-center justify-between">
+            <Label htmlFor="auto-confirm" className="text-sm font-medium">
+              Auto Confirm All Orders
+            </Label>
+            <Switch id="auto-confirm" />
+          </CardContent>
+        </Card>
 
         {/* Orders List */}
         <div className="space-y-3">
