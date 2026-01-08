@@ -114,7 +114,7 @@ const VendorStorefront = () => {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Response time</span>
+              <span className="text-sm text-muted-foreground">Process Time</span>
               <span className="text-sm font-medium">Within 2 hours</span>
             </div>
             <div className="flex justify-between">
