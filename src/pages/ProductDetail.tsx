@@ -5,40 +5,157 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Star, Package, TrendingUp, Percent, DollarSign, ShoppingCart } from "lucide-react";
+import { ArrowLeft, Star, Package, TrendingUp, Percent, DollarSign, ShoppingCart, Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
+  const { toast } = useToast();
   
-  // Mock product data - would come from database
-  const product = {
-    id: productId || "1",
-    name: "Summer Dress",
-    image: "🌸",
-    description: "A beautiful summer dress perfect for warm weather occasions. Made with breathable cotton fabric.",
-    costPrice: 25.00,
-    sellingPrice: 49.99,
-    originalPrice: 69.99,
-    supplier: "Fashion Wholesale Co.",
-    supplierLink: "https://supplier.com/product/123",
-    shippingTime: "7-14 days",
-    rating: 4.8,
-    totalReviews: 124,
-    totalOrders: 89,
-    totalRevenue: 4449.11,
-    status: "published"
-  };
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [product, setProduct] = useState<{
+    id: string;
+    name: string;
+    images: string[] | null;
+    description: string | null;
+    cost_price: number;
+    selling_price: number | null;
+    shipping_cost: number;
+    supplier_name: string | null;
+    supplier_link: string | null;
+    shipping_time_min: number | null;
+    shipping_time_max: number | null;
+    status: string;
+  } | null>(null);
 
   const [profitAmount, setProfitAmount] = useState(10);
   const [handlingFee, setHandlingFee] = useState(2);
   const [discountPercent, setDiscountPercent] = useState(0);
 
-  const calculatedPrice = product.costPrice + profitAmount + handlingFee;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!productId) return;
+      
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('catalog_products')
+        .select('*')
+        .eq('id', productId)
+        .maybeSingle();
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load product",
+          variant: "destructive"
+        });
+        navigate(-1);
+        return;
+      }
+
+      if (!data) {
+        toast({
+          title: "Not Found",
+          description: "Product not found",
+          variant: "destructive"
+        });
+        navigate(-1);
+        return;
+      }
+
+      setProduct(data);
+      // Calculate initial profit from existing selling price
+      if (data.selling_price) {
+        const existingProfit = data.selling_price - data.cost_price - data.shipping_cost;
+        setProfitAmount(Math.max(0, existingProfit));
+        setHandlingFee(data.shipping_cost);
+      }
+      setLoading(false);
+    };
+
+    fetchProduct();
+  }, [productId, navigate, toast]);
+
+  const costPrice = product?.cost_price || 0;
+  const calculatedPrice = costPrice + profitAmount + handlingFee;
   const finalPrice = discountPercent > 0 ? calculatedPrice * (1 - discountPercent / 100) : calculatedPrice;
-  const profit = finalPrice - product.costPrice;
+  const profit = finalPrice - costPrice;
+
+  const handleSavePricing = async () => {
+    if (!product) return;
+    
+    setSaving(true);
+    const { error } = await supabase
+      .from('catalog_products')
+      .update({
+        selling_price: finalPrice,
+        shipping_cost: handlingFee
+      })
+      .eq('id', product.id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save pricing",
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Pricing saved successfully"
+      });
+      setProduct({ ...product, selling_price: finalPrice, shipping_cost: handlingFee });
+    }
+    setSaving(false);
+  };
+
+  const handleUnpublish = async () => {
+    if (!product) return;
+    
+    setSaving(true);
+    const { error } = await supabase
+      .from('catalog_products')
+      .update({ status: 'draft' })
+      .eq('id', product.id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to unpublish product",
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Product moved to drafts"
+      });
+      navigate(-1);
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return null;
+  }
+
+  const shippingTime = product.shipping_time_min && product.shipping_time_max 
+    ? `${product.shipping_time_min}-${product.shipping_time_max} days`
+    : "N/A";
+
+  const productImage = product.images && product.images.length > 0 ? product.images[0] : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -57,8 +174,12 @@ const ProductDetail = () => {
         <Card>
           <CardContent className="p-4">
             <div className="flex gap-4">
-              <div className="w-20 h-20 bg-secondary rounded-lg flex items-center justify-center text-4xl shrink-0">
-                {product.image}
+              <div className="w-20 h-20 bg-secondary rounded-lg flex items-center justify-center text-4xl shrink-0 overflow-hidden">
+                {productImage ? (
+                  <img src={productImage} alt={product.name} className="w-full h-full object-cover" />
+                ) : (
+                  "📦"
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
@@ -68,10 +189,10 @@ const ProductDetail = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-                  {product.description}
+                  {product.description || "No description"}
                 </p>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Supplier: {product.supplier}
+                  Supplier: {product.supplier_name || "Unknown"}
                 </p>
               </div>
             </div>
@@ -84,16 +205,16 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-yellow-500 mb-1">
                 <Star className="h-4 w-4 fill-current" />
-                <span className="font-bold">{product.rating}</span>
+                <span className="font-bold">--</span>
               </div>
-              <p className="text-xs text-muted-foreground">{product.totalReviews} reviews</p>
+              <p className="text-xs text-muted-foreground">No reviews yet</p>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-primary mb-1">
                 <ShoppingCart className="h-4 w-4" />
-                <span className="font-bold">{product.totalOrders}</span>
+                <span className="font-bold">0</span>
               </div>
               <p className="text-xs text-muted-foreground">Total orders</p>
             </CardContent>
@@ -102,7 +223,7 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-green-600 mb-1">
                 <DollarSign className="h-4 w-4" />
-                <span className="font-bold">${product.totalRevenue.toFixed(2)}</span>
+                <span className="font-bold">$0.00</span>
               </div>
               <p className="text-xs text-muted-foreground">Total revenue</p>
             </CardContent>
@@ -111,7 +232,7 @@ const ProductDetail = () => {
             <CardContent className="p-4 text-center">
               <div className="flex items-center justify-center gap-1 text-blue-600 mb-1">
                 <Package className="h-4 w-4" />
-                <span className="font-bold">{product.shippingTime}</span>
+                <span className="font-bold">{shippingTime}</span>
               </div>
               <p className="text-xs text-muted-foreground">Shipping time</p>
             </CardContent>
@@ -138,7 +259,7 @@ const ProductDetail = () => {
               <CardContent className="space-y-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Cost Price</span>
-                  <span className="font-medium">${product.costPrice.toFixed(2)}</span>
+                  <span className="font-medium">${costPrice.toFixed(2)}</span>
                 </div>
                 
                 <Separator />
@@ -180,7 +301,10 @@ const ProductDetail = () => {
                   </div>
                 </div>
 
-                <Button className="w-full">Save Pricing</Button>
+                <Button className="w-full" onClick={handleSavePricing} disabled={saving}>
+                  {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  Save Pricing
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -219,18 +343,21 @@ const ProductDetail = () => {
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Profit After Discount</span>
                     <span className={`font-medium ${profit > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      ${(finalPrice - product.costPrice).toFixed(2)}
+                      ${(finalPrice - costPrice).toFixed(2)}
                     </span>
                   </div>
                 </div>
 
-                {discountPercent > 0 && (finalPrice - product.costPrice) < 3 && (
+                {discountPercent > 0 && (finalPrice - costPrice) < 3 && (
                   <p className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-950 p-2 rounded">
                     ⚠️ Warning: Your profit margin is very low with this discount.
                   </p>
                 )}
 
-                <Button className="w-full">Apply Discount</Button>
+                <Button className="w-full" onClick={handleSavePricing} disabled={saving}>
+                  {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
+                  Apply Discount
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -245,22 +372,22 @@ const ProductDetail = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Views (30 days)</span>
-                    <span className="font-medium">1,234</span>
+                    <span className="font-medium">--</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Conversion Rate</span>
-                    <span className="font-medium">7.2%</span>
+                    <span className="font-medium">--</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Average Rating</span>
                     <span className="font-medium flex items-center gap-1">
                       <Star className="h-3 w-3 text-yellow-500 fill-current" />
-                      {product.rating}
+                      --
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-muted-foreground">Return Rate</span>
-                    <span className="font-medium text-green-600">2.1%</span>
+                    <span className="font-medium">--</span>
                   </div>
                 </div>
 
@@ -268,24 +395,9 @@ const ProductDetail = () => {
 
                 <div>
                   <h4 className="text-sm font-medium mb-2">Recent Reviews</h4>
-                  <div className="space-y-2">
-                    <div className="bg-secondary/30 rounded-lg p-3">
-                      <div className="flex items-center gap-1 mb-1">
-                        {[1,2,3,4,5].map(i => (
-                          <Star key={i} className={`h-3 w-3 ${i <= 5 ? 'text-yellow-500 fill-current' : 'text-muted'}`} />
-                        ))}
-                      </div>
-                      <p className="text-xs text-muted-foreground">"Great quality, fast shipping!"</p>
-                    </div>
-                    <div className="bg-secondary/30 rounded-lg p-3">
-                      <div className="flex items-center gap-1 mb-1">
-                        {[1,2,3,4,5].map(i => (
-                          <Star key={i} className={`h-3 w-3 ${i <= 4 ? 'text-yellow-500 fill-current' : 'text-muted'}`} />
-                        ))}
-                      </div>
-                      <p className="text-xs text-muted-foreground">"Love this product, will buy again"</p>
-                    </div>
-                  </div>
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No reviews yet
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -293,14 +405,17 @@ const ProductDetail = () => {
         </Tabs>
 
         {/* Actions */}
-        <div className="flex gap-3">
-          <Button variant="outline" className="flex-1">
+        {product.status === "published" && (
+          <Button 
+            variant="outline" 
+            className="w-full" 
+            onClick={handleUnpublish}
+            disabled={saving}
+          >
+            {saving && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}
             Unpublish
           </Button>
-          <Button variant="destructive" className="flex-1">
-            Remove
-          </Button>
-        </div>
+        )}
       </div>
     </div>
   );
