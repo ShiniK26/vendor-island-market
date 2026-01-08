@@ -80,12 +80,12 @@ const OrderManagement = () => {
           <Button variant="outline" size="sm" className="flex-1">All</Button>
           <Button variant="outline" size="sm" className="flex-1">Delivered</Button>
           <div className="flex items-center gap-2">
+            <Label htmlFor="auto-confirm" className="text-xs whitespace-nowrap">Auto Confirm Order</Label>
             <Switch
               id="auto-confirm"
               checked={autoConfirmOrder}
               onCheckedChange={setAutoConfirmOrder}
             />
-            <Label htmlFor="auto-confirm" className="text-xs whitespace-nowrap">Auto Confirm Order</Label>
           </div>
         </div>
 
