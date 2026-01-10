@@ -32,6 +32,7 @@ import Auth from "./pages/Auth";
 import MyCatalog from "./pages/MyCatalog";
 import PricingRules from "./pages/PricingRules";
 import ProductDetail from "./pages/ProductDetail";
+import ArchivedCollections from "./pages/ArchivedCollections";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,7 @@ const App = () => (
             <Route path="/catalog" element={<MyCatalog />} />
             <Route path="/pricing-rules" element={<PricingRules />} />
             <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/archived-collections" element={<ArchivedCollections />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
