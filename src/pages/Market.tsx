@@ -167,25 +167,6 @@ const Market = () => {
             </CardContent>
           </Card>}
 
-        {/* Archived Collections Section */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Archive className="h-5 w-5 text-muted-foreground" />
-            <h2 className="text-lg font-semibold">Archived Collections</h2>
-          </div>
-          
-          <Link to="/archived-collections">
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
-              <CardContent className="p-4 flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">
-                  Manage saved products
-                </p>
-                <ChevronRight className="h-5 w-5 text-muted-foreground" />
-              </CardContent>
-            </Card>
-          </Link>
-        </div>
-
         {/* My Stores */}
         <div className="space-y-3">
           <h2 className="text-lg font-semibold">My Stores</h2>
@@ -219,6 +200,25 @@ const Market = () => {
                   </CardContent>
                 </Card>)}
             </div>}
+        </div>
+
+        {/* Archived Collections Section */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Archive className="h-5 w-5 text-muted-foreground" />
+            <h2 className="text-lg font-semibold">Archived Collections</h2>
+          </div>
+          
+          <Link to="/archived-collections">
+            <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+              <CardContent className="p-4 flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Manage saved products
+                </p>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </div>
 
