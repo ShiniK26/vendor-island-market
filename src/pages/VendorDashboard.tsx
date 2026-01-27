@@ -62,7 +62,7 @@ const VendorDashboard = () => {
           </Button>
           
           <Button className="w-full justify-start" variant="outline" asChild>
-            <Link to="/products">
+            <Link to="/archived-collections">
               <User className="mr-2 h-4 w-4" />
               Manage Products
             </Link>
@@ -71,13 +71,6 @@ const VendorDashboard = () => {
           <Button className="w-full justify-start" variant="outline">
             <User className="mr-2 h-4 w-4" />
             View Orders
-          </Button>
-          
-          <Button className="w-full justify-start" variant="outline" asChild>
-            <Link to="/storefront">
-              <User className="mr-2 h-4 w-4" />
-              Preview Storefront
-            </Link>
           </Button>
         </div>
 
