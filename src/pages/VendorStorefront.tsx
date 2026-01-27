@@ -1,15 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { User, Settings } from "lucide-react";
+import { User, Settings, Trash2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import { useState } from "react";
 import { getMockProductsArray } from "@/data/mockProducts";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 const VendorStorefront = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
 
   // Get products from shared mock data store
   const products = getMockProductsArray();
@@ -17,6 +30,14 @@ const VendorStorefront = () => {
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleDeleteStore = () => {
+    toast({
+      title: "Store Deleted",
+      description: "Your store has been permanently deleted.",
+    });
+    navigate("/dashboard");
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5">
@@ -35,7 +56,35 @@ const VendorStorefront = () => {
 
       <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
         {/* Store Banner */}
-        <Card>
+        <Card className="relative">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="absolute top-2 right-2 h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete Store</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Are you sure you want to delete "Trendy Fashion Store"? This action cannot be undone and will permanently remove the store and all its products.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction 
+                  onClick={handleDeleteStore}
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                >
+                  Delete Store
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <CardContent className="p-6 text-center bg-gradient-to-r from-primary/10 to-secondary/10">
             <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl text-primary-foreground">
               TF
