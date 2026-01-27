@@ -29,7 +29,7 @@ const VendorDashboard = () => {
         {/* Welcome Card */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Welcome back, "random string"!</CardTitle>
+            <CardTitle className="text-lg">Welcome back, "random string username"!</CardTitle>
             <CardDescription>Overall Analytic Report</CardDescription>
           </CardHeader>
           <CardContent>
