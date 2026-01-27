@@ -1,50 +1,100 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, User } from "lucide-react";
+import { Search, User, Star, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
 
 const ProductFinder = () => {
-  const suppliers = [
+  const products = [
     {
       id: 1,
-      name: "AliExpress Dropship",
-      products: "2.5M+",
-      category: "General",
-      commission: "5-15%",
-      image: "🛍️"
+      name: "Wireless Bluetooth Earbuds TWS",
+      image: "🎧",
+      price: 12.99,
+      originalPrice: 29.99,
+      sold: 2847,
+      rating: 4.8,
+      freeShipping: true,
     },
     {
       id: 2,
-      name: "Fashion Wholesale",
-      products: "150K+",
-      category: "Fashion",
-      commission: "10-25%",
-      image: "👗"
+      name: "Phone Case Silicone Cover",
+      image: "📱",
+      price: 3.49,
+      originalPrice: 8.99,
+      sold: 5621,
+      rating: 4.6,
+      freeShipping: true,
     },
     {
       id: 3,
-      name: "Tech Suppliers Hub",
-      products: "75K+",
-      category: "Electronics",
-      commission: "8-20%",
-      image: "📱"
-    }
-  ];
-
-  const trendingProducts = [
-    { name: "Wireless Earbuds", price: "$25.99", profit: "$15.00" },
-    { name: "Phone Case", price: "$8.99", profit: "$5.50" },
-    { name: "Fitness Tracker", price: "$35.99", profit: "$20.00" }
+      name: "Smart Watch Fitness Tracker",
+      image: "⌚",
+      price: 24.99,
+      originalPrice: 59.99,
+      sold: 1893,
+      rating: 4.7,
+      freeShipping: true,
+    },
+    {
+      id: 4,
+      name: "LED Ring Light 10 inch",
+      image: "💡",
+      price: 15.99,
+      originalPrice: 35.99,
+      sold: 3421,
+      rating: 4.5,
+      freeShipping: false,
+    },
+    {
+      id: 5,
+      name: "Portable Power Bank 10000mAh",
+      image: "🔋",
+      price: 18.49,
+      originalPrice: 39.99,
+      sold: 4102,
+      rating: 4.9,
+      freeShipping: true,
+    },
+    {
+      id: 6,
+      name: "Mini Bluetooth Speaker",
+      image: "🔊",
+      price: 9.99,
+      originalPrice: 24.99,
+      sold: 2156,
+      rating: 4.4,
+      freeShipping: true,
+    },
+    {
+      id: 7,
+      name: "USB C Hub Adapter 7-in-1",
+      image: "🔌",
+      price: 22.99,
+      originalPrice: 49.99,
+      sold: 1567,
+      rating: 4.7,
+      freeShipping: false,
+    },
+    {
+      id: 8,
+      name: "Laptop Stand Adjustable",
+      image: "💻",
+      price: 19.99,
+      originalPrice: 45.99,
+      sold: 987,
+      rating: 4.8,
+      freeShipping: true,
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
+    <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
+      <header className="p-4 border-b bg-background/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <BurgerMenu />
@@ -60,91 +110,62 @@ const ProductFinder = () => {
         </div>
       </header>
 
-      <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
-        <h1 className="text-xl font-bold text-primary">Product Finder</h1>
+      <div className="px-3 py-4 max-w-sm mx-auto space-y-4">
+        <h1 className="text-xl font-bold text-foreground">Product Finder</h1>
         
-        {/* Search */}
+        {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input placeholder="Search products..." className="pl-10" />
         </div>
-        {/* Trending Products */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Trending Products</CardTitle>
-            <CardDescription>High-demand items with good profit margins</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {trendingProducts.map((product, index) => (
-              <div key={index} className="flex justify-between items-center">
-                <div>
-                  <p className="font-medium text-sm">{product.name}</p>
-                  <p className="text-xs text-muted-foreground">Cost: {product.price}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold text-green-600">+{product.profit}</p>
-                  <Button size="sm" variant="outline">Import</Button>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
 
-        {/* Suppliers */}
-        <div className="space-y-3">
-          <h3 className="font-semibold text-foreground">Dropshipping Suppliers</h3>
-          {suppliers.map((supplier) => (
-            <Card key={supplier.id}>
-              <CardContent className="p-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-secondary rounded-lg flex items-center justify-center text-xl">
-                    {supplier.image}
+        {/* Product Grid - Lazada Style */}
+        <div className="grid grid-cols-2 gap-2">
+          {products.map((product) => (
+            <Card key={product.id} className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow">
+              <CardContent className="p-0">
+                {/* Product Image */}
+                <div className="relative aspect-square bg-muted flex items-center justify-center">
+                  <span className="text-5xl">{product.image}</span>
+                  <button className="absolute top-2 right-2 p-1.5 bg-background/80 rounded-full">
+                    <Heart className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                  {product.freeShipping && (
+                    <span className="absolute bottom-2 left-2 bg-primary text-primary-foreground text-[10px] px-1.5 py-0.5 rounded">
+                      Free Shipping
+                    </span>
+                  )}
+                </div>
+                
+                {/* Product Info */}
+                <div className="p-2 space-y-1">
+                  <h3 className="text-xs font-medium line-clamp-2 leading-tight min-h-[2rem]">
+                    {product.name}
+                  </h3>
+                  
+                  {/* Price */}
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-primary font-bold text-sm">
+                      ${product.price.toFixed(2)}
+                    </span>
+                    <span className="text-muted-foreground text-[10px] line-through">
+                      ${product.originalPrice.toFixed(2)}
+                    </span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-medium truncate">{supplier.name}</h3>
-                    <p className="text-sm text-muted-foreground">{supplier.category}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-muted-foreground">
-                        {supplier.products} products
-                      </span>
-                      <span className="text-xs text-green-600">
-                        {supplier.commission} commission
-                      </span>
+                  
+                  {/* Rating & Sold */}
+                  <div className="flex items-center justify-between text-[10px] text-muted-foreground">
+                    <div className="flex items-center gap-0.5">
+                      <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                      <span>{product.rating}</span>
                     </div>
+                    <span>{product.sold.toLocaleString()} sold</span>
                   </div>
-                  <Button size="sm">Connect</Button>
                 </div>
               </CardContent>
             </Card>
           ))}
         </div>
-
-        {/* Categories */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Browse by Category</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="h-16 flex-col">
-                <span className="text-xl mb-1">👗</span>
-                <span className="text-xs">Fashion</span>
-              </Button>
-              <Button variant="outline" className="h-16 flex-col">
-                <span className="text-xl mb-1">📱</span>
-                <span className="text-xs">Electronics</span>
-              </Button>
-              <Button variant="outline" className="h-16 flex-col">
-                <span className="text-xl mb-1">🏠</span>
-                <span className="text-xs">Home</span>
-              </Button>
-              <Button variant="outline" className="h-16 flex-col">
-                <span className="text-xl mb-1">💄</span>
-                <span className="text-xs">Beauty</span>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       <BottomNavigation />
