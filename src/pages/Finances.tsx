@@ -123,20 +123,12 @@ const Finances = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button variant="outline" className="h-16 flex-col" asChild>
-            <Link to="/pricing-rules">
-              <span className="text-xl mb-1">💰</span>
-              <span className="text-xs">Pricing Rules</span>
-            </Link>
-          </Button>
-          <Button variant="outline" className="h-16 flex-col" asChild>
-            <Link to="/orders">
-              <span className="text-xl mb-1">📦</span>
-              <span className="text-xs">Orders</span>
-            </Link>
-          </Button>
-        </div>
+        <Button variant="outline" className="w-full h-16 flex-col" asChild>
+          <Link to="/orders">
+            <span className="text-xl mb-1">📦</span>
+            <span className="text-xs">Orders</span>
+          </Link>
+        </Button>
 
         {/* Recent Transactions */}
         <Card>
