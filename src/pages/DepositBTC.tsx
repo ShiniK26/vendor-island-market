@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -121,8 +122,8 @@ const DepositBTC = () => {
             <CardDescription>Send BTC to this address</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center">
-            <div className="w-48 h-48 bg-muted flex items-center justify-center rounded-lg mb-4">
-              
+            <div className="w-48 h-48 bg-white flex items-center justify-center rounded-lg mb-4 p-2">
+              <QRCodeSVG value={btcAddress} size={176} level="H" />
             </div>
             
             {/* Address */}
