@@ -58,7 +58,7 @@ const Finances = () => {
 
       <div className="px-4 py-6 max-w-sm mx-auto space-y-6">
         <h1 className="text-xl font-bold text-primary">Finances</h1>
-        
+
         {/* Balance Card */}
         <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground">
           <CardContent className="p-6">
@@ -68,9 +68,7 @@ const Finances = () => {
                 {loading ? (
                   <Skeleton className="h-9 w-32 bg-primary-foreground/20" />
                 ) : (
-                  <p className="text-3xl font-bold">
-                    {formatAmount(wallet?.available_balance || 0)}
-                  </p>
+                  <p className="text-3xl font-bold">{formatAmount(wallet?.available_balance || 0)}</p>
                 )}
               </div>
               <Wallet className="h-8 w-8 opacity-90" />
@@ -79,7 +77,12 @@ const Finances = () => {
               <Button variant="secondary" size="sm" className="flex-1">
                 Withdraw
               </Button>
-              <Button variant="outline" size="sm" className="flex-1 border-foreground/20 text-foreground dark:text-white hover:text-white hover:bg-foreground/30 dark:hover:text-black dark:hover:bg-white/30" asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 border-foreground/20 text-foreground dark:text-white hover:bg-foreground/30 dark:hover:text-black dark:hover:bg-white/30"
+                asChild
+              >
                 <Link to="/crypto-deposit">Add Funds</Link>
               </Button>
             </div>
@@ -97,9 +100,7 @@ const Finances = () => {
               {loading ? (
                 <Skeleton className="h-6 w-20" />
               ) : (
-                <div className="text-lg font-bold text-primary">
-                  {formatAmount(wallet?.reserved_balance || 0)}
-                </div>
+                <div className="text-lg font-bold text-primary">{formatAmount(wallet?.reserved_balance || 0)}</div>
               )}
               <div className="text-xs text-muted-foreground">For pending orders</div>
             </CardContent>
@@ -153,18 +154,15 @@ const Finances = () => {
                     {getTransactionIcon(tx.type)}
                     <div>
                       <h3 className="font-medium text-sm capitalize">{tx.type}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {tx.description || "Transaction"}
-                      </p>
+                      <p className="text-xs text-muted-foreground">{tx.description || "Transaction"}</p>
                       <p className="text-xs text-muted-foreground">
                         {formatDistanceToNow(new Date(tx.created_at))} ago
                       </p>
                     </div>
                   </div>
-                  <span className={`font-bold text-sm ${
-                    tx.amount > 0 ? "text-green-600" : "text-red-600"
-                  }`}>
-                    {tx.amount > 0 ? "+" : ""}{formatAmount(tx.amount)}
+                  <span className={`font-bold text-sm ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}>
+                    {tx.amount > 0 ? "+" : ""}
+                    {formatAmount(tx.amount)}
                   </span>
                 </div>
               ))
