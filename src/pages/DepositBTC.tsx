@@ -9,102 +9,96 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
-
 const DepositBTC = () => {
   const [amount, setAmount] = useState("");
   const [receipt, setReceipt] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const navigate = useNavigate();
-  
+
   // Replace with your actual BTC address
   const btcAddress = "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh";
-
   const handleCopy = () => {
     navigator.clipboard.writeText(btcAddress);
     toast({
       title: "Copied!",
-      description: "BTC address copied to clipboard",
+      description: "BTC address copied to clipboard"
     });
   };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setReceipt(e.target.files[0]);
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!amount || !receipt) {
       toast({
         title: "Missing Information",
         description: "Please enter amount and upload receipt",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
-
     setLoading(true);
-
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const {
+        data: {
+          user
+        }
+      } = await supabase.auth.getUser();
       if (!user) {
         toast({
           title: "Error",
           description: "Please log in to submit deposit",
-          variant: "destructive",
+          variant: "destructive"
         });
         return;
       }
 
       // Upload receipt
       const fileName = `${user.id}/${Date.now()}_${receipt.name}`;
-      const { error: uploadError } = await supabase.storage
-        .from('deposit-receipts')
-        .upload(fileName, receipt);
-
+      const {
+        error: uploadError
+      } = await supabase.storage.from('deposit-receipts').upload(fileName, receipt);
       if (uploadError) throw uploadError;
 
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('deposit-receipts')
-        .getPublicUrl(fileName);
+      const {
+        data: {
+          publicUrl
+        }
+      } = supabase.storage.from('deposit-receipts').getPublicUrl(fileName);
 
       // Create deposit request
-      const { error: insertError } = await supabase
-        .from('deposit_requests')
-        .insert({
-          user_id: user.id,
-          crypto_type: 'BTC',
-          amount: parseFloat(amount),
-          receipt_url: publicUrl,
-        });
-
+      const {
+        error: insertError
+      } = await supabase.from('deposit_requests').insert({
+        user_id: user.id,
+        crypto_type: 'BTC',
+        amount: parseFloat(amount),
+        receipt_url: publicUrl
+      });
       if (insertError) throw insertError;
-
       toast({
         title: "Success!",
-        description: "Deposit request submitted successfully",
+        description: "Deposit request submitted successfully"
       });
-
       navigate('/finances');
     } catch (error) {
       console.error('Error submitting deposit:', error);
       toast({
         title: "Error",
         description: "Failed to submit deposit request",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setLoading(false);
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 pb-20">
       <header className="p-4 border-b bg-background/80 backdrop-blur-sm">
         <div className="max-w-sm mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -128,7 +122,7 @@ const DepositBTC = () => {
           </CardHeader>
           <CardContent className="flex flex-col items-center">
             <div className="w-48 h-48 bg-muted flex items-center justify-center rounded-lg mb-4">
-              <p className="text-sm text-muted-foreground">QR Code</p>
+              
             </div>
             
             {/* Address */}
@@ -154,33 +148,14 @@ const DepositBTC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="amount">Amount (BTC)</Label>
-                <Input
-                  id="amount"
-                  type="number"
-                  step="0.00000001"
-                  placeholder="0.00000000"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  required
-                />
+                <Input id="amount" type="number" step="0.00000001" placeholder="0.00000000" value={amount} onChange={e => setAmount(e.target.value)} required />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="receipt">Upload Receipt</Label>
                 <div className="flex items-center gap-2">
-                  <Input
-                    id="receipt"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full"
-                    onClick={() => document.getElementById('receipt')?.click()}
-                  >
+                  <Input id="receipt" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                  <Button type="button" variant="outline" className="w-full" onClick={() => document.getElementById('receipt')?.click()}>
                     <Upload className="mr-2 h-4 w-4" />
                     {receipt ? receipt.name : "Choose File"}
                   </Button>
@@ -196,8 +171,6 @@ const DepositBTC = () => {
       </div>
 
       <BottomNavigation />
-    </div>
-  );
+    </div>;
 };
-
 export default DepositBTC;
