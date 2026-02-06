@@ -23,7 +23,7 @@ const Index = () => {
       <div className="max-w-sm mx-auto">
         <Carousel plugins={[Autoplay({
         delay: 2000
-      })]} className="w-full" opts={{
+      }) as any]} className="w-full" opts={{
         align: "start",
         loop: true
       }}>

@@ -111,7 +111,7 @@ const Auth = () => {
           plugins={[
             Autoplay({
               delay: 2000,
-            }),
+            }) as any,
           ]}
           className="w-full"
           opts={{
