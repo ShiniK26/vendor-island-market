@@ -12,7 +12,7 @@ const ProductFinder = () => {
     {
       id: 1,
       name: "Wireless Bluetooth Earbuds TWS",
-      image: "🎧",
+      image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=300&fit=crop",
       price: 12.99,
       originalPrice: 29.99,
       sold: 2847,
@@ -22,7 +22,7 @@ const ProductFinder = () => {
     {
       id: 2,
       name: "Phone Case Silicone Cover",
-      image: "📱",
+      image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=300&h=300&fit=crop",
       price: 3.49,
       originalPrice: 8.99,
       sold: 5621,
@@ -32,7 +32,7 @@ const ProductFinder = () => {
     {
       id: 3,
       name: "Smart Watch Fitness Tracker",
-      image: "⌚",
+      image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop",
       price: 24.99,
       originalPrice: 59.99,
       sold: 1893,
@@ -42,7 +42,7 @@ const ProductFinder = () => {
     {
       id: 4,
       name: "LED Ring Light 10 inch",
-      image: "💡",
+      image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=300&fit=crop",
       price: 15.99,
       originalPrice: 35.99,
       sold: 3421,
@@ -52,7 +52,7 @@ const ProductFinder = () => {
     {
       id: 5,
       name: "Portable Power Bank 10000mAh",
-      image: "🔋",
+      image: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=300&h=300&fit=crop",
       price: 18.49,
       originalPrice: 39.99,
       sold: 4102,
@@ -62,7 +62,7 @@ const ProductFinder = () => {
     {
       id: 6,
       name: "Mini Bluetooth Speaker",
-      image: "🔊",
+      image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300&h=300&fit=crop",
       price: 9.99,
       originalPrice: 24.99,
       sold: 2156,
@@ -72,7 +72,7 @@ const ProductFinder = () => {
     {
       id: 7,
       name: "USB C Hub Adapter 7-in-1",
-      image: "🔌",
+      image: "https://images.unsplash.com/photo-1625723044792-44de16ccb4e9?w=300&h=300&fit=crop",
       price: 22.99,
       originalPrice: 49.99,
       sold: 1567,
@@ -82,7 +82,7 @@ const ProductFinder = () => {
     {
       id: 8,
       name: "Laptop Stand Adjustable",
-      image: "💻",
+      image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300&h=300&fit=crop",
       price: 19.99,
       originalPrice: 45.99,
       sold: 987,
@@ -125,8 +125,12 @@ const ProductFinder = () => {
             <Card key={product.id} className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow">
               <CardContent className="p-0">
                 {/* Product Image */}
-                <div className="relative aspect-square bg-muted flex items-center justify-center">
-                  <span className="text-5xl">{product.image}</span>
+                <div className="relative aspect-square bg-muted">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
                   <button className="absolute top-2 right-2 p-1.5 bg-background/80 rounded-full">
                     <Heart className="h-4 w-4 text-muted-foreground" />
                   </button>
