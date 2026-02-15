@@ -121,8 +121,8 @@ const VendorStorefront = () => {
           {filteredProducts.map((product) => (
             <Card key={product.id} className="overflow-hidden">
               <CardContent className="p-0">
-                <div className="aspect-square bg-secondary flex items-center justify-center text-4xl">
-                  {product.image}
+                <div className="aspect-square bg-secondary">
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-3 space-y-2">
                   <h3 className="font-medium text-sm leading-tight">{product.name}</h3>

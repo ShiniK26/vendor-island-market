@@ -22,7 +22,7 @@ const defaultProducts: Record<string, MockProduct> = {
   "mock-1": {
     id: "mock-1",
     name: "Summer Dress",
-    image: "🌸",
+    image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=300&h=300&fit=crop",
     description: "A beautiful summer dress perfect for warm weather occasions. Made with breathable cotton fabric.",
     costPrice: 25.00,
     sellingPrice: 49.99,
@@ -38,7 +38,7 @@ const defaultProducts: Record<string, MockProduct> = {
   "mock-2": {
     id: "mock-2",
     name: "Winter Jacket",
-    image: "🧥",
+    image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300&h=300&fit=crop",
     description: "Warm and stylish winter jacket with premium insulation. Perfect for cold weather.",
     costPrice: 45.00,
     sellingPrice: 89.99,
@@ -54,7 +54,7 @@ const defaultProducts: Record<string, MockProduct> = {
   "mock-3": {
     id: "mock-3",
     name: "Casual Sneakers",
-    image: "👟",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop",
     description: "Comfortable everyday sneakers with cushioned soles. Available in multiple sizes.",
     costPrice: 35.00,
     sellingPrice: 79.99,
@@ -70,7 +70,7 @@ const defaultProducts: Record<string, MockProduct> = {
   "mock-4": {
     id: "mock-4",
     name: "Designer Handbag",
-    image: "👜",
+    image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&h=300&fit=crop",
     description: "Elegant designer handbag with premium leather finish. Spacious interior with multiple compartments.",
     costPrice: 55.00,
     sellingPrice: 129.99,
