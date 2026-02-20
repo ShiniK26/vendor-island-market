@@ -1,11 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, DollarSign, ArrowRight, Plus } from "lucide-react";
+import { Package, DollarSign, ArrowRight, Plus, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
 import { User } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // Mock archived products data (will be replaced with CJDropshipping API)
 const mockArchivedProducts = [
@@ -115,9 +121,19 @@ const ArchivedCollections = () => {
                     <Button size="sm" variant="outline" className="flex-1">
                       Edit Pricing
                     </Button>
-                    <Button size="sm" className="flex-1">
-                      Push to Store
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button size="sm" className="flex-1">
+                          Push to Store
+                          <ChevronDown className="h-3 w-3 ml-1" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-popover">
+                        <DropdownMenuItem>Store 1</DropdownMenuItem>
+                        <DropdownMenuItem>Store 2</DropdownMenuItem>
+                        <DropdownMenuItem>Store 3</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </CardContent>
               </Card>
