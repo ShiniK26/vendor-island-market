@@ -86,9 +86,7 @@ const ProductDetail = () => {
         <Card>
           <CardContent className="p-4">
             <div className="flex gap-4">
-              <div className="w-20 h-20 bg-secondary rounded-lg flex items-center justify-center text-4xl shrink-0">
-                {product.image}
-              </div>
+              <img src={product.image} alt={product.name} className="w-20 h-20 bg-secondary rounded-lg object-cover shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <h2 className="font-semibold text-lg leading-tight">{product.name}</h2>
