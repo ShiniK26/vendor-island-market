@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Package, DollarSign, ArrowRight, Plus, ChevronDown } from "lucide-react";
+import { Package, DollarSign, ArrowRight, Plus, ChevronDown, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/BackButton";
 import BurgerMenu from "@/components/BurgerMenu";
@@ -94,8 +94,16 @@ const ArchivedCollections = () => {
         ) : (
           <div className="space-y-3">
             {mockArchivedProducts.map((product) => (
-              <Card key={product.id}>
+              <Card key={product.id} className="relative">
                 <CardContent className="p-4">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-7 w-7 text-destructive hover:text-destructive"
+                    onClick={() => {/* TODO: delete product */}}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                   <div className="flex items-center gap-3">
                     <img 
                       src={product.image} 
