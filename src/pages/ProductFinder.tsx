@@ -166,7 +166,7 @@ const ProductFinder = () => {
                     <span>{product.sold.toLocaleString()} sold</span>
                   </div>
                   
-                  <Button size="sm" variant="outline" className="w-full mt-1 text-xs h-7">
+                  <Button size="sm" variant="destructive" className="w-full mt-1 text-xs h-7">
                     <Plus className="h-3 w-3 mr-1" />
                     Add to Archive
                   </Button>
