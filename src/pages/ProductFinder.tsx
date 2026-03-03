@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Search, User, Star, Heart } from "lucide-react";
+import { Search, User, Star, Heart, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import BurgerMenu from "@/components/BurgerMenu";
@@ -165,6 +165,11 @@ const ProductFinder = () => {
                     </div>
                     <span>{product.sold.toLocaleString()} sold</span>
                   </div>
+                  
+                  <Button size="sm" variant="outline" className="w-full mt-1 text-xs h-7">
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add to Archive
+                  </Button>
                 </div>
               </CardContent>
             </Card>
