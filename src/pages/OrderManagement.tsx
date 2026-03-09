@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+type FilterType = "all" | "delivered";
 import { User } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -10,6 +11,7 @@ import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
 const OrderManagement = () => {
   const [autoConfirmOrder, setAutoConfirmOrder] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   
   const orders = [{
     id: "#1234",
@@ -77,8 +79,8 @@ const OrderManagement = () => {
 
         {/* Filters */}
         <div className="flex gap-2 items-center">
-          <Button variant="outline" size="sm" className="flex-1">All</Button>
-          <Button variant="outline" size="sm" className="flex-1">Delivered</Button>
+          <Button variant={activeFilter === "all" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setActiveFilter("all")}>All</Button>
+          <Button variant={activeFilter === "delivered" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setActiveFilter("delivered")}>Delivered</Button>
           <div className="flex items-center gap-2">
             <Label htmlFor="auto-confirm" className="text-xs whitespace-nowrap">Auto Confirm Order</Label>
             <Switch
