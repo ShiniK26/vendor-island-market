@@ -11,6 +11,7 @@ import BurgerMenu from "@/components/BurgerMenu";
 import ProfileMenu from "@/components/ProfileMenu";
 const OrderManagement = () => {
   const [autoConfirmOrder, setAutoConfirmOrder] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<FilterType>("all");
   
   const orders = [{
     id: "#1234",
