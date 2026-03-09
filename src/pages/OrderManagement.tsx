@@ -79,8 +79,8 @@ const OrderManagement = () => {
 
         {/* Filters */}
         <div className="flex gap-2 items-center">
-          <Button variant="outline" size="sm" className="flex-1">All</Button>
-          <Button variant="outline" size="sm" className="flex-1">Delivered</Button>
+          <Button variant={activeFilter === "all" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setActiveFilter("all")}>All</Button>
+          <Button variant={activeFilter === "delivered" ? "default" : "outline"} size="sm" className="flex-1" onClick={() => setActiveFilter("delivered")}>Delivered</Button>
           <div className="flex items-center gap-2">
             <Label htmlFor="auto-confirm" className="text-xs whitespace-nowrap">Auto Confirm Order</Label>
             <Switch
