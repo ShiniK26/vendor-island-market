@@ -111,6 +111,10 @@ const OrderManagement = () => {
                   </div>
                   <span className="font-bold text-primary">{order.amount}</span>
                 </div>
+                <div className="flex gap-2 mt-3">
+                  <Button size="sm" className="flex-1 h-8 text-xs">Confirm</Button>
+                  <Button size="sm" variant="destructive" className="flex-1 h-8 text-xs">Reject</Button>
+                </div>
               </CardContent>
             </Card>)}
         </div>
