@@ -57,10 +57,10 @@ const OrderManagement = () => {
         <h1 className="text-xl font-bold text-primary">Order Management</h1>
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3">
-          <Card>
+          <Card className="bg-primary text-primary-foreground">
             <CardContent className="p-3 text-center">
-              <div className="text-lg font-bold text-primary">12</div>
-              <div className="text-xs text-muted-foreground">Pending</div>
+              <div className="text-lg font-bold">12</div>
+              <div className="text-xs opacity-80">Pending</div>
             </CardContent>
           </Card>
           <Card>
